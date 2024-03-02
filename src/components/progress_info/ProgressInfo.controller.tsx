@@ -11,8 +11,10 @@ export default function useController(props: { todos: TodoProps[] }) {
             const _completed = todos.filter(t => t.isDone).length || 0
             setCompleted(_completed)
             setIndicator(Math.abs((todos.length - _completed) / todos.length * 100))
+        } else {
+            setCompleted(0)
+            setIndicator(0)
         }
-
     }, [todos])
 
     return {
