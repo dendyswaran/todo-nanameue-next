@@ -1,6 +1,7 @@
 import { TodoProps } from "@/lib/types";
 import '@testing-library/jest-dom';
 import { render, renderHook, waitFor } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import Todo from "./Todo";
 import useController from './Todo.controller';
 
@@ -49,6 +50,13 @@ describe('todo', () => {
         expect(getByText('Todo 1')).toBeDefined();
         expect(getByText('Todo 2')).toBeDefined();
         expect(getByText('Todo 3')).toBeDefined();
+    })
 
+    it("should disabled the checkbox on checked", async () => {
+        const { findAllByTestId } = render(<Todo todos={todos} />)
+        const checkboxes = await findAllByTestId('listitem-checkbox__update')
+
+        await userEvent.click(checkboxes[0])
+        expect(checkboxes[0].getAttribute('aria-checked')).toBe("true")
     })
 })

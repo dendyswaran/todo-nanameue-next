@@ -13,6 +13,7 @@ export default function TodoItem({ todo, onCheck, onDelete }: TodoItemProps) {
         <div data-testid="listitem" className="flex items-center justify-between rounded-full bg-white h-12 py-2 px-4 mt-4" aria-disabled={pending}>
             <div className="flex items-center gap-4 ml-2">
                 <Checkbox
+                    data-testid="listitem-checkbox__update"
                     disabled={pending}
                     checked={isComplete}
                     onCheckedChange={() => {
