@@ -13,3 +13,16 @@ export async function invokeAPI(url: string, args: { body?: string, method: 'GET
     ...args
   })
 }
+
+export function sanitizeInput(input: string) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    "/": '&#x2F;',
+  };
+  const reg = /[&<>"'/]/ig;
+  return input.replace(reg, (match) => (map as { [key: string]: string })[match]);
+}

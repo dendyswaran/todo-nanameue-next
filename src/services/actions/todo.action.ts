@@ -1,7 +1,7 @@
 'use server'
 
 import { TodoFormStateProps } from "@/lib/types"
-import { invokeAPI } from "@/lib/utils"
+import { invokeAPI, sanitizeInput } from "@/lib/utils"
 import { revalidatePath } from "next/cache"
 
 const API_BASE_URL = process.env.API_BASE_URL
@@ -15,9 +15,10 @@ export const createTodo = async (prevState: any, formData: FormData): Promise<To
             return { message: "Please input a text" }
         }
 
+        const clearText = sanitizeInput(text.toString())
         await invokeAPI(`${API_URL}/todos/create`, {
             method: 'POST',
-            body: JSON.stringify({ text }),
+            body: JSON.stringify({ text: clearText }),
         })
         revalidatePath("/")
         return {
